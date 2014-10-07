@@ -1,0 +1,9 @@
+build/
+dist/
+*.jpg
+*.jpeg
+*.png
+*.JPG
+*.JPEG
+*.PNG
+*.TMP
