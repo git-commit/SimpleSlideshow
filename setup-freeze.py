@@ -23,7 +23,7 @@ shortcut_table = [
      "Slideshow",                  # Name
      "TARGETDIR",                  # Component_
      "[TARGETDIR]Slideshow.exe",   # Target
-     None,                         # Arguments
+     "300",                         # Arguments
      None,                         # Description
      None,                         # Hotkey
      None,                         # Icon
@@ -36,7 +36,7 @@ shortcut_table = [
      "Slideshow",                  # Name
      "TARGETDIR",                  # Component_
      "[TARGETDIR]Slideshow.exe",   # Target
-     None,                         # Arguments
+     "300",                         # Arguments
      None,                         # Description
      None,                         # Hotkey
      None,                         # Icon
@@ -64,7 +64,7 @@ bdist_msi_options = {
 
 
 setup(name='Slideshow',
-      version='0.2.0',
+      version='0.2.1',
       description='Simple slideshow utility that shows all pictures in the current working directory',
       url='http://xerael.net',
       author='Maximilian Berger',
