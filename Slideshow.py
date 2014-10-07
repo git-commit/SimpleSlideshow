@@ -43,7 +43,7 @@ class Slideshow(QtWidgets.QMainWindow):
 
     @staticmethod
     def get_all_pictures(path):
-        picture_types = ('.jpg', '.png', '.JPG', '.PNG')
+        picture_types = ('.jpg', '.png', '.JPG', '.PNG', '.jpeg', '.JPEG')
         return [f for f in listdir(path) if isfile(join(path, f))
                 and os.path.splitext(f)[1] in picture_types]
 
