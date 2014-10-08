@@ -1,4 +1,5 @@
-from PyQt5 import QtWidgets, QtCore, QtGui
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import Qt
 from os import listdir
 from os.path import isfile, join
 import os
@@ -14,13 +15,11 @@ class Slideshow(QtWidgets.QMainWindow):
     def __init__(self, sleep):
         super(Slideshow, self).__init__()
         self.scene = QtWidgets.QGraphicsScene()
+        self.scene.setBackgroundBrush(QtGui.QBrush(Qt.black, Qt.SolidPattern))
         self.graphics_view = QtWidgets.QGraphicsView(self.scene)
         self.setCentralWidget(self.graphics_view)
         self.setWindowTitle('Slideshow')
-        #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.setWindowState(QtCore.Qt.WindowFullScreen)
-        self.graphics_view.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.graphics_view.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.setWindowFlags(Qt.FramelessWindowHint)
         self.show()
 
         QtWidgets.QShortcut(QtGui.QKeySequence("SPACE"), self,
@@ -31,9 +30,8 @@ class Slideshow(QtWidgets.QMainWindow):
 
         self.lock = threading.Lock()
 
-        self.sleep = sleep
         self._stopThread = False
-        self.thread = threading.Thread(target=slideTime, args=(self, self.sleep))
+        self.thread = threading.Thread(target=slideTime, args=(self, sleep))
         self.thread.daemon = True
         self.thread.start()
 
@@ -50,6 +48,7 @@ class Slideshow(QtWidgets.QMainWindow):
         item = QtWidgets.QGraphicsPixmapItem(pixmap)
         self.scene.clear()
         self.scene.addItem(item)
+        self.graphics_view.fitInView(item, Qt.KeepAspectRatio)
         print("Changed picture to " + str(file))
         self.graphics_view.fitInView(item, QtCore.Qt.KeepAspectRatio)
 
@@ -65,17 +64,19 @@ class Slideshow(QtWidgets.QMainWindow):
         return list
 
     def closeEvent(self, event):
-        print("Setting thread variable to false.")
+        print("Stopping Thread...")
         self._stopThread = True
         event.accept()  # let the window close
 
 
 def slideTime(slide, delay):
-    print("Starting thread")
+    print("Starting thread...")
 
     while not slide.stopThread():
         slide.nextPicture()
         time.sleep(delay)
+
+    print("Thread stopped...")
 
 
 def main():
