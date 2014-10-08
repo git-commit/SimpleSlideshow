@@ -53,10 +53,11 @@ class Slideshow(QtWidgets.QMainWindow):
         item = QtWidgets.QGraphicsPixmapItem(pixmap)
         item.setTransformationMode(Qt.SmoothTransformation)  # AA for transfoming
         self.scene.clear()
+        self.scene.setSceneRect(0, 0, pixmap.width(), pixmap.height())
         self.scene.addItem(item)
         self.graphics_view.fitInView(item, Qt.KeepAspectRatio)
         print("Changed picture to " + str(file))
-        self.graphics_view.fitInView(item, QtCore.Qt.KeepAspectRatio)
+        self.graphics_view.mapToScene(self.graphics_view.viewport().rect().center())
 
     def stopThread(self):
         return self._stopThread
