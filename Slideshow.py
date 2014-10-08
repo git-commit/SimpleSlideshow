@@ -51,6 +51,7 @@ class Slideshow(QtWidgets.QMainWindow):
         self._current_picture = file
         pixmap = QtGui.QPixmap(os.path.join(os.getcwd(), file))
         item = QtWidgets.QGraphicsPixmapItem(pixmap)
+        item.setTransformationMode(Qt.SmoothTransformation)  # AA for transfoming
         self.scene.clear()
         self.scene.addItem(item)
         self.graphics_view.fitInView(item, Qt.KeepAspectRatio)
