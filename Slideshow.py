@@ -20,6 +20,7 @@ class Slideshow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.graphics_view)
         self.setWindowTitle('Slideshow')
         self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowState(Qt.WindowFullScreen)
         self.show()
 
         QtWidgets.QShortcut(QtGui.QKeySequence("SPACE"), self,
