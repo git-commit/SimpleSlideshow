@@ -27,6 +27,7 @@ class Slideshow(QtWidgets.QMainWindow):
 
         self.path = os.getcwd()
         self.files = Slideshow.get_all_pictures(self.path)
+        self._current_picture = None
 
         self.lock = threading.Lock()
 
@@ -39,11 +40,15 @@ class Slideshow(QtWidgets.QMainWindow):
         self.lock.acquire()
         self.files = Slideshow.get_all_pictures(self.path)
         if self.files:
-            r = random.randint(0, len(self.files) - 1)
+            upper = len(self.files) - 1
+            r = random.randint(0, upper)
+            while self.files[r] == self._current_picture:
+                r = random.randint(0, upper)
             self._change_picture(self.files[r])
         self.lock.release()
 
     def _change_picture(self, file):
+        self._current_picture = file
         pixmap = QtGui.QPixmap(os.path.join(os.getcwd(), file))
         item = QtWidgets.QGraphicsPixmapItem(pixmap)
         self.scene.clear()
